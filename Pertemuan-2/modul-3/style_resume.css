@@ -1,0 +1,331 @@
+
+/* 1. Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --navy: #14565b;
+    --text: #0b0b0b;
+    --muted: #64748b;
+    --background: #f1f5f9;
+    --surface: #477791;
+    --border: #e2e8f0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+/* 2. Header */
+body > header {
+    background: var(--navy);
+    color: white;
+    padding: 24px;
+    border-bottom: 3px solid var(--primary);
+}
+
+body > header h1 {
+    max-width: 1000px;
+    margin: 0 auto 16px;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+}
+
+/* 3. Navigation */
+nav {
+    max-width: 1000px;
+    margin: auto;
+}
+
+nav ul {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    list-style: none;
+}
+
+nav a {
+    display: inline-block;
+    color: #cbd5e1;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.25s, color 0.25s,
+                transform 0.25s;
+}
+
+nav a:hover {
+    color: white;
+    background: var(--primary);
+    transform: translateY(-2px);
+}
+
+/* 4. Main content */
+main {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 24px;
+}
+
+/* 5. Introduction and project sections */
+main section {
+    background: var(--surface);
+    padding: 32px;
+    margin-bottom: 28px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.04);
+}
+
+/* Introduction */
+#tentang {
+    border-left: 5px solid var(--primary);
+    background: linear-gradient(135deg, #ffffff, #eff6ff);
+}
+
+#tentang p {
+    font-size: 17px;
+    color: var(--text);
+}
+
+/* Section headings */
+h2 {
+    color: var(--navy);
+    font-size: 25px;
+    line-height: 1.4;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+}
+
+h3 {
+    color: var(--navy);
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+/* 6. Project cards */
+#proyek article {
+    background: #f8fafc;
+    padding: 22px;
+    margin-top: 16px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    border-bottom: 1px solid var(--border);
+    transition: transform 0.25s, box-shadow 0.25s,
+                border-color 0.25s;
+}
+
+#proyek article:hover {
+    transform: translateY(-4px);
+    border-color: #93c5fd;
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.10);
+}
+
+#proyek article header {
+    margin-bottom: 8px;
+}
+
+#proyek article p {
+    color: var(--muted);
+}
+
+/* Technology and year information */
+time {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+/* 7. Images */
+main img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 16px auto;
+    border-radius: 12px;
+}
+
+/* 8. Links */
+main a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+main a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* 9. Contact form */
+form {
+    margin-top: 24px;
+}
+
+form p {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--navy);
+    font-weight: 600;
+}
+
+input[type="text"],
+input[type="email"],
+select,
+textarea {
+    display: block;
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+    background: white;
+    color: var(--text);
+    font: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.13);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+button {
+    padding: 11px 22px;
+    border: none;
+    border-radius: 9px;
+    background: var(--primary);
+    color: white;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+button[type="reset"] {
+    background: #64748b;
+}
+
+button[type="reset"]:hover {
+    background: #475569;
+}
+
+/* 10. Aside / work status */
+aside {
+    max-width: 952px;
+    margin: 30px auto;
+    padding: 26px;
+    background: var(--navy);
+    color: #cbd5e1;
+    border-left: 5px solid var(--primary);
+    border-radius: 12px;
+}
+
+aside h3 {
+    color: white;
+    margin-bottom: 8px;
+}
+
+aside p {
+    color: #cbd5e1;
+}
+
+/* 11. Horizontal lines */
+hr {
+    display: none;
+}
+
+/* 12. Footer */
+footer {
+    margin-top: 48px;
+    padding: 26px 20px;
+    background: var(--navy);
+    color: #94a3b8;
+    text-align: center;
+    font-size: 14px;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* 13. Responsive design */
+@media (max-width: 700px) {
+    body {
+        font-size: 15px;
+    }
+
+    body > header {
+        padding: 22px 18px;
+    }
+
+    body > header h1 {
+        font-size: 25px;
+    }
+
+    nav ul {
+        gap: 6px;
+    }
+
+    nav a {
+        padding: 7px 10px;
+    }
+
+    main {
+        margin: 24px auto;
+        padding: 0 16px;
+    }
+
+    main section {
+        padding: 22px 18px;
+        border-radius: 14px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    #proyek article {
+        padding: 18px;
+    }
+
+    aside {
+        margin: 24px 16px;
+        padding: 20px;
+    }
+
+    button {
+        max-width: 100%;
+    }
+}

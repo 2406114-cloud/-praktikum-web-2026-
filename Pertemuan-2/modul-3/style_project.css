@@ -1,0 +1,121 @@
+
+/* ===== RESET DASAR ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #5588da;
+    color: #050706;
+    line-height: 1.7;
+}
+
+/* ===== HEADER ===== */
+body > header {
+    background: linear-gradient(135deg, #101d38, #234b80);
+    color: #aee1e8;
+    padding: 35px 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+/* ===== NAVIGASI ===== */
+nav {
+    background-color: #172b4d;
+    padding: 14px 20px;
+    text-align: center;
+}
+
+nav a {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 14px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #8ec5ff;
+}
+
+/* ===== KONTEN UTAMA ===== */
+main {
+    width: min(1100px, 90%);
+    margin: 35px auto;
+}
+
+/* ===== BAGIAN PROYEK ===== */
+section {
+    background-color: #ffffff;
+    padding: 28px;
+    margin-bottom: 25px;
+    border-radius: 14px;
+    box-shadow: 0 5px 18px rgba(24, 46, 78, 0.08);
+}
+
+section h2 {
+    color: #1d4779;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #dce8f5;
+}
+
+section p {
+    margin-bottom: 12px;
+}
+
+/* ===== GAMBAR PROYEK ===== */
+main img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 18px auto;
+    border-radius: 10px;
+}
+
+/* ===== LINK DAN TOMBOL ===== */
+main a {
+    color: #1764a5;
+    font-weight: bold;
+}
+
+main a:hover {
+    color: #0b3157;
+}
+
+/* ===== FOOTER ===== */
+footer {
+    background-color: #101d38;
+    color: #ffffff;
+    text-align: center;
+    padding: 22px;
+    margin-top: 35px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 1.6rem;
+    }
+
+    nav a {
+        display: inline-block;
+        margin: 6px 8px;
+    }
+
+    main {
+        width: 94%;
+        margin: 20px auto;
+    }
+
+    section {
+        padding: 18px;
+    }
+}

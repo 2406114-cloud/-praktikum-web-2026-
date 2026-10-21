@@ -56,6 +56,8 @@ console.log(webProjects);
 console.log("\n=== 3. RINGKASAN NAMA & ANGGARAN (map) ===");
 const ringkasanProyek = projects.map(proj => ({
     nama: proj.title,
+    status : proj.completed ? "[SELESAI]" : "[PROSES]",
+    kategori: proj.category,
     biaya: formatRupiah(proj.budget)
 }));
 console.table(ringkasanProyek);

@@ -30,6 +30,9 @@ const projects = [
     }
 ];
 
+let nextId = 5;
+
+// Mengubah angka menjadi format Rupiah
 const formatRupiah = (angka) => {
     return new Intl.NumberFormat("id-ID", {
         style: "currency",
@@ -38,16 +41,17 @@ const formatRupiah = (angka) => {
     }).format(angka);
 };
 
-const updateStats = (dataList) => {
-    const totalProjects = dataList.length;
+// Memperbarui statistik proyek
+const updateStats = () => {
+    const totalProjects = projects.length;
 
-    const totalBudget = dataList.reduce(
-        (acc, curr) => acc + curr.budget,
+    const totalBudget = projects.reduce(
+        (total, project) => total + project.budget,
         0
     );
 
-    const completedCount = dataList.filter(
-        item => item.completed
+    const completedCount = projects.filter(
+        project => project.completed
     ).length;
 
     document.getElementById("stat-total-projects").textContent =
@@ -60,23 +64,22 @@ const updateStats = (dataList) => {
         completedCount;
 };
 
-const renderProjects = (filteredList) => {
+// Menampilkan daftar proyek
+const renderProjects = (data = projects) => {
     const container = document.getElementById("project-list");
 
-    if (!container) return;
-
-    if (filteredList.length === 0) {
+    if (data.length === 0) {
         container.innerHTML =
-            "<p style='text-align: center; color: #64748b; padding: 20px;'>Tidak ada proyek pada kategori ini.</p>";
+            '<p class="empty-message">Proyek tidak ditemukan.</p>';
         return;
     }
 
-    const htmlString = filteredList.map(proj => {
-        const badgeClass = proj.completed
+    container.innerHTML = data.map(project => {
+        const badgeClass = project.completed
             ? "badge-success"
             : "badge-pending";
 
-        const statusText = proj.completed
+        const statusText = project.completed
             ? "Selesai"
             : "Dalam Pengerjaan";
 
@@ -84,51 +87,172 @@ const renderProjects = (filteredList) => {
             <div class="project-card">
                 <div class="project-info">
                     <span class="project-category">
-                        ${proj.category}
+                        ${project.category}
                     </span>
-                    <h4>${proj.title}</h4>
+
+                    <h4>${escapeHTML(project.title)}</h4>
+
                     <p class="project-budget">
-                        ${formatRupiah(proj.budget)}
+                        Anggaran: ${formatRupiah(project.budget)}
                     </p>
-                </div>
-                <div>
+
                     <span class="badge ${badgeClass}">
                         ${statusText}
                     </span>
+
+                    <div class="project-actions">
+                        <button
+                            class="btn-status"
+                            data-action="toggle"
+                            data-id="${project.id}"
+                            type="button"
+                        >
+                            Ubah Status
+                        </button>
+
+                        <button
+                            class="btn-delete"
+                            data-action="delete"
+                            data-id="${project.id}"
+                            type="button"
+                        >
+                            Hapus
+                        </button>
+                    </div>
                 </div>
             </div>
         `;
     }).join("");
-
-    container.innerHTML = htmlString;
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-    renderProjects(projects);
-    updateStats(projects);
+// Mencegah teks input diperlakukan sebagai HTML
+const escapeHTML = (text) => {
+    return String(text).replace(/[&<>"']/g, character => {
+        const entities = {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        };
 
-    const filterButtons = document.querySelectorAll(".btn-filter");
+        return entities[character];
+    });
+};
 
-    filterButtons.forEach(btn => {
-        btn.addEventListener("click", (e) => {
-            filterButtons.forEach(b =>
-                b.classList.remove("active")
+// Pencarian langsung berdasarkan nama proyek
+const searchProjects = () => {
+    const keyword = document
+        .getElementById("search-input")
+        .value.trim()
+        .toLowerCase();
+
+    const filteredProjects = projects.filter(project =>
+        project.title.toLowerCase().includes(keyword)
+    );
+
+    renderProjects(filteredProjects);
+};
+
+// Menambahkan proyek baru
+document.getElementById("project-form").addEventListener(
+    "submit",
+    (event) => {
+        event.preventDefault();
+
+        const titleInput = document.getElementById("project-title");
+        const categoryInput = document.getElementById("project-category");
+        const budgetInput = document.getElementById("project-budget");
+
+        const title = titleInput.value.trim();
+        const category = categoryInput.value;
+        const budget = Number(budgetInput.value);
+
+        if (!title) {
+            alert("Nama proyek tidak boleh kosong!");
+            titleInput.focus();
+            return;
+        }
+
+        if (!category) {
+            alert("Silakan pilih kategori proyek!");
+            categoryInput.focus();
+            return;
+        }
+
+        if (
+            !Number.isSafeInteger(budget) ||
+            budget < 1 ||
+            budget > 1000000000000
+        ) {
+            alert("Anggaran harus berupa bilangan bulat positif yang valid!");
+            budgetInput.focus();
+            return;
+        }
+
+        const newProject = {
+            id: nextId++,
+            title: title,
+            category: category,
+            budget: budget,
+            completed: false
+        };
+
+        projects.push(newProject);
+
+        document.getElementById("project-form").reset();
+        document.getElementById("search-input").value = "";
+
+        updateStats();
+        renderProjects();
+
+        alert("Proyek berhasil ditambahkan!");
+    }
+);
+
+// Menjalankan pencarian setiap kali pengguna mengetik
+document.getElementById("search-input").addEventListener(
+    "input",
+    searchProjects
+);
+
+// Menangani tombol ubah status dan hapus proyek
+document.getElementById("project-list").addEventListener(
+    "click",
+    (event) => {
+        const button = event.target.closest("button[data-action]");
+
+        if (!button) return;
+
+        const projectId = Number(button.dataset.id);
+        const action = button.dataset.action;
+
+        const projectIndex = projects.findIndex(
+            project => project.id === projectId
+        );
+
+        if (projectIndex === -1) return;
+
+        if (action === "toggle") {
+            projects[projectIndex].completed =
+                !projects[projectIndex].completed;
+        }
+
+        if (action === "delete") {
+            const confirmed = confirm(
+                `Yakin ingin menghapus proyek "${projects[projectIndex].title}"?`
             );
 
-            e.target.classList.add("active");
+            if (!confirmed) return;
 
-            const selectedCategory =
-                e.target.getAttribute("data-category");
+            projects.splice(projectIndex, 1);
+        }
 
-            if (selectedCategory === "Semua") {
-                renderProjects(projects);
-            } else {
-                const filtered = projects.filter(
-                    p => p.category === selectedCategory
-                );
+        updateStats();
+        searchProjects();
+    }
+);
 
-                renderProjects(filtered);
-            }
-        });
-    });
-});
+// Menampilkan data awal saat halaman dibuka
+updateStats();
+renderProjects();
